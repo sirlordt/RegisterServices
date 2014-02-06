@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="RegisterServicesManager" default="00_Build-All" basedir=".">
+ 
+    <target name="00_Build-All" depends="01_Init, 02_Create_Bin_Folders_And_Files_ServicesDaemon, 03_Compile-RegisterCommonLibs-Source, 04_Create-RegisterCommonLibs.jar, 05_Compile-RegisterServicesManager-Source, 06_Create-RegisterServicesManager.jar, 07_Compile-RegisterServices-Source, 08_Generate-RegisterServices-Jar-Files" description="Compile ALL and package ALL">
+        <echo message="Compile ALL and create ALL .jar file" />
+    </target>
+
+    <target name="01_Init">
+        <tstamp />
+    
+        <property name="distro-bin" value="distro-bin/" />
+        <property name="bin" value="bin/" />
+        
+        <echo message="Remember to adjust the path to the root of the project ServicesDaemon to property ${ServicesDaemon-Workspace}" />
+        <property name="ServicesDaemon-Workspace" value="/home/sirlordt/Documentos/git/servicesdaemon/ServicesDaemon/" />
+        
+        <property name="distro-bin-ServicesDaemon" value="${ServicesDaemon-Workspace}/${distro-bin}/ServicesDaemon/" />
+        
+        <property name="bin-ServicesDaemon" value="${ServicesDaemon-Workspace}/${bin}/ServicesDaemon/" />
+	
+        <property name="src-RegisterCommonClasses" value="RegisterCommonLibs/RegisterCommonClasses/" />
+        <property name="bin-RegisterCommonClasses" value="bin/RegisterCommonClasses/" />
+
+        <property name="RegisterCommonClassesName" value="RegisterCommonClasses" />
+    	
+        <property name="RegisterCommonLibsName" value="RegisterCommonLibs" />
+        <property name="RegisterCommonLibsVersion" value="0.0.0.1" />
+
+        <property name="bin-SystemEnumServices" value="${bin}/SystemRegisterEnumServices/" />
+        <property name="src-SystemEnumServices" value="SystemEnumServices/SystemRegisterEnumServices" />
+
+        <property name="SystemEnumServicesName" value="SystemRegisterEnumServices" />
+        <property name="SystemEnumServicesVersion" value="0.0.0.1" />
+        
+        <property name="bin-SystemPing" value="${bin}/SystemRegisterPing/" />
+        <property name="src-SystemPing" value="SystemPing/SystemRegisterPing" />
+
+        <property name="SystemPingName" value="SystemRegisterPing" />
+        <property name="SystemPingVersion" value="0.0.0.1" />
+
+        <property name="bin-SystemRegisterManager" value="${bin}/SystemRegisterManager/" />
+        <property name="src-SystemRegisterManager" value="SystemRegisterManager/SystemRegisterManager" />
+
+        <property name="SystemRegisterManagerName" value="SystemRegisterManager" />
+        <property name="SystemRegisterManagerVersion" value="0.0.0.1" />
+        
+        <property name="bin-SystemUnregisterManager" value="${bin}/SystemUnregisterManager/" />
+        <property name="src-SystemUnregisterManager" value="SystemUnregisterManager/SystemUnregisterManager" />
+
+        <property name="SystemUnregisterManagerName" value="SystemUnregisterManager" />
+        <property name="SystemUnregisterManagerVersion" value="0.0.0.1" />
+
+        <property name="bin-SystemListRegisteredManagers" value="${bin}/SystemListRegisteredManagers/" />
+        <property name="src-SystemListRegisteredManagers" value="SystemListRegisteredManagers/SystemListRegisteredManagers" />
+
+        <property name="SystemListRegisteredManagersName" value="SystemListRegisteredManagers" />
+        <property name="SystemListRegisteredManagersVersion" value="0.0.0.1" />
+    	
+        <property name="src-RegisterServicesManager" value="RegisterServicesManager/RegisterServicesManager/" />
+        <property name="bin-RegisterServicesManager" value="bin/RegisterServicesManager/" />
+
+        <property name="RegisterServicesManagerName" value="RegisterServicesManager" />
+        <property name="RegisterServicesManagerVersion" value="0.0.0.1" />
+    	
+        <property name="bin-ServicesDaemon-RegisterServicesManager" value="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/" />
+    	
+        <property name="EnableDebug" value="true"/>
+        
+        <path id="class_path_ServicesDaemon_Libs_jars">
+                
+           <fileset dir="${distro-bin-ServicesDaemon}/Libs">
+               <include name="**/*.jar" />
+           </fileset>
+                
+        </path> 
+
+        <path id="class_path_RegisterServicesManager_Libs_jars">
+                
+           <fileset dir="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Libs">
+               <include name="**/*.jar" />
+           </fileset>
+                
+        </path> 
+    	
+    </target>
+	
+    <target name="02_Create_Bin_Folders_And_Files_ServicesDaemon" depends="01_Init" description="Generate all struct need for bin folder">
+
+        <mkdir dir="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/RegisterServices"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Langs"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Libs"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Logs"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/ResponsesFormats"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Temp"/>
+        <copy file="${src-RegisterServicesManager}/RegisterServicesManager.conf" todir="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager" overwrite="true"/>
+        <copy file="${src-RegisterServicesManager}/Langs/RegisterServicesManager.init.lang.xml" todir="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Langs" overwrite="true"/>
+        
+        <delete file="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Libs/readme.txt"/>
+        <delete file="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/ResponsesFormats/readme.txt"/>
+        <delete file="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Temp/readme.txt"/>
+        
+        <touch file="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Libs/readme.txt"/>
+        <touch file="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/ResponsesFormats/readme.txt"/>
+        <touch file="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Temp/readme.txt"/>
+        
+        <echo file="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Libs/readme.txt" append="true" message="Folder for support library (*.jar) files need for run the manager${line.separator}"/>
+        <echo file="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/ResponsesFormats/readme.txt" append="true" message="Here you can put all the (*.jar) files that implement the CAbstractResponseFormat class to extend formats reponses embedded in system.${line.separator}${line.separator}The directory must exist.${line.separator}"/>
+        <echo file="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Temp/readme.txt" append="true" message="Temporal storage for multiple purposes${line.separator}"/>
+        
+        <copy todir="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Libs" overwrite="true">
+            <fileset dir="${src-RegisterServicesManager}/Libs/" includes="**/*.jar"/>
+        </copy> 
+    	
+    </target>
+	
+    <target name="03_Compile-RegisterCommonLibs-Source" depends="01_Init" description="Only compile RegisterCommonLibs source folder">
+        <mkdir dir="${bin}"/>
+        <javac includeantruntime="false" destdir="${bin}" debug="${EnableDebug}">
+            <src path="${src-RegisterCommonClasses}" />
+            <classpath refid="class_path_ServicesDaemon_Libs_jars"/>
+            <classpath refid="class_path_RegisterServicesManager_Libs_jars"/>
+            <!-- compilerarg value = "-XDignore.symbol.file " --> 
+        </javac>    
+	</target>
+	
+    <target name="04_Create-RegisterCommonLibs.jar" depends="01_Init" description="Generate RegisterCommonLibs.jar file for [ServicesDaemon-Workspace]/bin/ServicesDaemon/Managers/01_RegisterServicesManager/Libs folder">
+    
+        <delete file="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Libs/${RegisterCommonLibsName}.jar"/>
+        
+        <jar jarfile="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/Libs/${RegisterCommonLibsName}.jar" index="no" compress="yes" update="true">
+            <fileset dir="${bin}" includes="${RegisterCommonClassesName}/*.class"/>
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Specification-Title" value="${RegisterCommonLibsName}" />
+                <attribute name="Specification-Version" value="${RegisterCommonLibsVersion}" />
+            </manifest>
+        </jar>
+    	
+    </target>
+	
+    <target name="05_Compile-RegisterServicesManager-Source" depends="01_Init" description="Only compile RegisterServicesManager source folder">
+        
+    	<mkdir dir="${bin}"/>
+        
+    	<javac includeantruntime="false" destdir="${bin}" debug="${EnableDebug}">
+            <src path="${src-RegisterServicesManager}" />
+            <classpath refid="class_path_ServicesDaemon_Libs_jars"/>
+            <classpath refid="class_path_RegisterServicesManager_Libs_jars"/>
+            <!-- compilerarg value = "-XDignore.symbol.file " --> 
+        </javac>
+    	
+    </target>
+	
+    <target name="06_Create-RegisterServicesManager.jar" depends="01_Init" description="Generate RegisterServicesManager.jar file for [ServicesDaemon-Workspace]/bin/ServicesDaemon/Managers/01_RegisterServicesManager folder">
+
+        <delete file="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/${RegisterServicesManagerName}.jar"/>
+        
+        <jar jarfile="${bin-ServicesDaemon}/Managers/01_RegisterServicesManager/${RegisterServicesManagerName}.jar" index="no" compress="yes" update="true">
+            <fileset dir="${bin}" includes="${RegisterServicesManagerName}/*.class"/>
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Specification-Title" value="${RegisterServicesManagerName}" />
+                <attribute name="Specification-Version" value="${RegisterServicesManagerVersion}" />
+            </manifest>
+            <service type="AbstractServicesManager.CAbstractServicesManager">
+                <provider classname="RegisterServicesManager.CServicesManager"/>
+            </service>  
+        </jar>
+    	
+    </target>	
+	
+    <target name="07_Compile-RegisterServices-Source" depends="01_Init" description="Only compile RegisterServices System.Register.Manager, System.Unregister.Manager, System.List.Registered.Managers source folder">
+	
+        <mkdir dir="${bin}"/>
+
+        <javac includeantruntime="false" destdir="${bin}" includes="**/*.java" debug="${EnableDebug}">
+            <src path="${src-SystemEnumServices}" />
+            <src path="${src-SystemPing}" />
+            <src path="${src-SystemRegisterManager}" />
+            <src path="${src-SystemUnregisterManager}" />
+            <src path="${src-SystemListRegisteredManagers}" />
+            <classpath refid="class_path_ServicesDaemon_Libs_jars"/>
+            <!-- Include en el class path the RegisterCommonLibs.jar and another jar located in libs folder -->
+            <classpath refid="class_path_RegisterServicesManager_Libs_jars"/>
+        </javac>
+    	
+    </target>
+	
+    <target name="08_Generate-RegisterServices-Jar-Files" depends="01_Init"  description="Generate SystemRegisterManager.jar, SystemUnregisterManager.jar, SystemListRegisteredManagers.jar from source folder">
+    
+        <delete file="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Enum.Services/${SystemEnumServicesName}.jar"/>
+    	
+        <jar jarfile="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Enum.Services/${SystemEnumServicesName}.jar" index="no" compress="yes" update="true">
+            <fileset dir="${bin}" includes="${SystemEnumServicesName}/**/*.class"/>
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Specification-Title" value="${SystemEnumServicesName}" />
+                <attribute name="Specification-Version" value="${SystemEnumServicesVersion}" />
+            </manifest>
+            <service type="RegisterCommonClasses.CRegisterAbstractService">
+                <provider classname="SystemRegisterEnumServices.CSystemEnumServices"/>
+            </service>  
+        </jar>
+    	
+        <copy todir="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Enum.Services/Langs/" overwrite="true">
+            <fileset dir="${src-SystemEnumServices}/Langs">
+                <include name="**/*.lang.xml" />
+            </fileset>
+        </copy> 
+    	
+        <delete file="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Ping/${SystemPingName}.jar"/>
+        
+        <jar jarfile="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Ping/${SystemPingName}.jar" index="no" compress="yes" update="true">
+            <fileset dir="${bin}" includes="${SystemPingName}/**/*.class"/>
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Specification-Title" value="${SystemPingName}" />
+                <attribute name="Specification-Version" value="${SystemPingVersion}" />
+            </manifest>
+            <service type="RegisterCommonClasses.CRegisterAbstractService">
+                <provider classname="SystemRegisterPing.CSystemPing"/>
+            </service>  
+        </jar>
+    
+        <copy todir="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Ping/Langs/" overwrite="true">
+            <fileset dir="${src-SystemPing}/Langs">
+                <include name="**/*.lang.xml" />
+            </fileset>
+        </copy> 
+    	
+        <delete file="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Register.Manager/${SystemRegisterManagerName}.jar"/>
+
+        <jar jarfile="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Register.Manager/${SystemRegisterManagerName}.jar" index="no" compress="yes" update="true">
+            <fileset dir="${bin}" includes="${SystemRegisterManagerName}/**/*.class"/>
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Specification-Title" value="${SystemRegisterManagerName}" />
+                <attribute name="Specification-Version" value="${SystemRegisterManagerVersion}" />
+            </manifest>
+            <service type="RegisterCommonClasses.CRegisterAbstractService">
+                <provider classname="SystemRegisterManager.CSystemRegisterManager"/>
+            </service>  
+        </jar>
+    
+        <copy todir="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Register.Manager/Langs/" overwrite="true">
+            <fileset dir="${src-SystemRegisterManager}/Langs">
+                <include name="**/*.lang.xml" />
+            </fileset>
+        </copy> 
+
+        <delete file="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Unregister.Manager/${SystemUnregisterManagerName}.jar"/>
+
+        <jar jarfile="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Unregister.Manager/${SystemUnregisterManagerName}.jar" index="no" compress="yes" update="true">
+            <fileset dir="${bin}" includes="${SystemUnregisterManagerName}/**/*.class"/>
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Specification-Title" value="${SystemUnregisterManagerName}" />
+                <attribute name="Specification-Version" value="${SystemUnregisterManagerVersion}" />
+            </manifest>
+            <service type="RegisterCommonClasses.CRegisterAbstractService">
+                <provider classname="SystemUnregisterManager.CSystemUnregisterManager"/>
+            </service>  
+        </jar>
+    
+        <copy todir="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.Unregister.Manager/Langs/" overwrite="true">
+            <fileset dir="${src-SystemUnregisterManager}/Langs">
+                <include name="**/*.lang.xml" />
+            </fileset>
+        </copy> 
+
+        <delete file="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.List.Registered.Managers/${SystemListRegisteredManagersName}.jar"/>
+
+        <jar jarfile="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.List.Registered.Managers/${SystemListRegisteredManagersName}.jar" index="no" compress="yes" update="true">
+            <fileset dir="${bin}" includes="${SystemListRegisteredManagersName}/**/*.class"/>
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Specification-Title" value="${SystemListRegisteredManagersName}" />
+                <attribute name="Specification-Version" value="${SystemListRegisteredManagersVersion}" />
+            </manifest>
+            <service type="RegisterCommonClasses.CRegisterAbstractService">
+                <provider classname="SystemListRegisteredManagers.CSystemListRegisteredManagers"/>
+            </service>  
+        </jar>
+    
+        <copy todir="${bin-ServicesDaemon-RegisterServicesManager}/RegisterServices/System.List.Registered.Managers/Langs/" overwrite="true">
+            <fileset dir="${src-SystemListRegisteredManagers}/Langs">
+                <include name="**/*.lang.xml" />
+            </fileset>
+        </copy> 
+    	
+    </target>
+	
+</project>	
