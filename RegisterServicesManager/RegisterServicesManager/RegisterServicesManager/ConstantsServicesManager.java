@@ -13,7 +13,7 @@ public interface ConstantsServicesManager {
 	public static final int _Frequency_Check_Remove = 15000;
 	public static final int _Remove_Registered_Timeout = 5000;
 	
-	public static final String _Register_Services_Dir = "RegisterServices/"; 
+	public static final String _Services_Dir = "RegisterServices/"; 
 
 	public static final String _Logger_Name = "RegisterServicesManagerLogger"; 
 
