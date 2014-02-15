@@ -128,7 +128,7 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 		   
 			if ( ConfigSectionNode.hasAttributes() == true ) {
 		
-				String strAttributesOrder[] = { ConstantsCommonConfigXMLTags._Password, ConstantsCommonConfigXMLTags._Temp_Dir, ConstantsConfigXMLTags._RegisterServices_Dir, ConstantsCommonConfigXMLTags._Responses_Formats_Dir, ConstantsCommonConfigXMLTags._Default_Response_Format, ConstantsCommonConfigXMLTags._Default_Response_Format_Version, ConstantsCommonConfigXMLTags._Response_Request_Method, ConstantsConfigXMLTags._Frequency_Check_Remove, ConstantsConfigXMLTags._Remove_Registered_Timeout, ConstantsCommonConfigXMLTags._Request_Timeout, ConstantsCommonConfigXMLTags._Socket_Timeout };
+				String strAttributesOrder[] = { ConstantsCommonConfigXMLTags._Password, ConstantsCommonConfigXMLTags._Temp_Dir, ConstantsConfigXMLTags._Services_Dir, ConstantsCommonConfigXMLTags._Responses_Formats_Dir, ConstantsCommonConfigXMLTags._Default_Response_Format, ConstantsCommonConfigXMLTags._Default_Response_Format_Version, ConstantsCommonConfigXMLTags._Response_Request_Method, ConstantsConfigXMLTags._Frequency_Check_Remove, ConstantsConfigXMLTags._Remove_Registered_Timeout, ConstantsCommonConfigXMLTags._Request_Timeout, ConstantsCommonConfigXMLTags._Socket_Timeout };
 
 				NamedNodeMap NodeAttributes = ConfigSectionNode.getAttributes();
 
@@ -177,7 +177,7 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 						    }
 						
 						}
-						else if ( NodeAttribute.getNodeName().equals( ConstantsConfigXMLTags._RegisterServices_Dir ) ) {
+						else if ( NodeAttribute.getNodeName().equals( ConstantsConfigXMLTags._Services_Dir ) ) {
 
 							this.strServicesDir = NodeAttribute.getNodeValue();
 		
@@ -187,7 +187,7 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 						        	
 						    }
 
-					        Logger.logMessage( "1", Lang.translate( "Runtime config value [%s] changed to: [%s]", "strDBServicesDir", this.strServicesDir ) );
+					        Logger.logMessage( "1", Lang.translate( "Runtime config value [%s] changed to: [%s]", "strServicesDir", this.strServicesDir ) );
 				        
 					        if ( Utilities.checkDir( this.strServicesDir, Logger, Lang ) == false ) {
 						    	
@@ -385,9 +385,9 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 					        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute not found, using the default value [%s]", ConstantsCommonConfigXMLTags._Password, this.strPassword ) );
 		            		
 		            	}
-		            	else if ( strAttributesOrder[ intAttributesIndex ].equals( ConstantsConfigXMLTags._RegisterServices_Dir ) ) {
+		            	else if ( strAttributesOrder[ intAttributesIndex ].equals( ConstantsConfigXMLTags._Services_Dir ) ) {
 		            		
-					        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute not found, using the default value [%s]", ConstantsConfigXMLTags._RegisterServices_Dir, this.strServicesDir ) );
+					        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute not found, using the default value [%s]", ConstantsConfigXMLTags._Services_Dir, this.strServicesDir ) );
 
 					        if ( Utilities.checkDir( this.strServicesDir, Logger, Lang ) == false ) {
 						    	

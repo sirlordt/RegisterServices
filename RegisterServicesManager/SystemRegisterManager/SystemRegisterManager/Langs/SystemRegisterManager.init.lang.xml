@@ -3,8 +3,6 @@
 <properties>
 <comment>Language file messages translations</comment>
 
-<entry key="Lets see if the server responds correctly, for monitoring purposes">Permite saber si el servidor responde correctamente, con fines de monitorización</entry>
-<entry key="Whole number sent as a parameter and return increased by 1">Número entero enviado como parámetro y devuelto aumentado en 1</entry>
 <entry key="Response format name, example: XML-DATAPACKET, CSV, JSON">Nombre del formato de respuesta, ejemplo: XML-DATAPACKET, CSV, JSON</entry>
 <entry key="Response format version, example: 1.1">Versión del formato de respuesta, ejemplo: 1.1</entry>
 
